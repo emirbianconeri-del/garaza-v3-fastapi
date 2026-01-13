@@ -15,3 +15,6 @@ REST API za upravljanje vozilima u garaži (CRUD) + API testovi.
 venv\Scripts\activate
 pip install -r requirements.txt
 uvicorn app.main:app --reload
+Live API: https://garaza-v3-fastapi.onrender.com
+
+Swagger: https://garaza-v3-fastapi.onrender.com/docs
