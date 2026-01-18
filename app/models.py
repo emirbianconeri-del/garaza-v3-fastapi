@@ -5,6 +5,7 @@ class VoziloDB(Base):
     __tablename__ = "vozila"
 
     id = Column(Integer, primary_key=True, index=True)
+    tip = Column(String, nullable=False, index=True)
     marka = Column(String, nullable=False, index=True)
     model = Column(String, nullable=False)
     godiste = Column(Integer, nullable=False, index=True)

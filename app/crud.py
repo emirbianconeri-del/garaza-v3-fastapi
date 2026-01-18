@@ -34,11 +34,15 @@ def update_vozilo(db: Session, vozilo_id: int, data: VoziloUpdate) -> VoziloDB |
     db.refresh(obj)
     return obj
 
-def search_vozila(db: Session, marka: str | None = None, tablice: str | None = None) -> list[VoziloDB]:
+
+def search_vozila(db: Session, tip: str | None = None, marka: str | None = None, tablice: str | None = None) -> list[VoziloDB]:
     stmt = select(VoziloDB)
+    if tip:
+        stmt = stmt.where(VoziloDB.tip.ilike(f"%{tip}%"))
     if marka:
         stmt = stmt.where(VoziloDB.marka.ilike(f"%{marka}%"))
     if tablice:
         stmt = stmt.where(VoziloDB.tablice.ilike(f"%{tablice}%"))
     stmt = stmt.order_by(VoziloDB.id.desc())
     return list(db.scalars(stmt).all())
+

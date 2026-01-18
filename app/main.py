@@ -10,6 +10,10 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Garaza v3 API")
 
+@app.get("/")
+def root():
+    return {"status": "ok", "docs": "/docs"}
+
 @app.get("/health")
 def health():
     return {"status": "ok"}
@@ -54,14 +58,12 @@ def obrisi_vozilo(vozilo_id: int, db: Session = Depends(get_db)):
     if not ok:
         raise HTTPException(status_code=404, detail="Vozilo nije pronađeno.")
     return {"deleted": True}
-
 @app.get("/vozila/search", response_model=list[VoziloOut])
-def pretraga(marka: str | None = None, tablice: str | None = None, db: Session = Depends(get_db)):
-    return crud.search_vozila(db, marka=marka, tablice=tablice)
-from fastapi import FastAPI
+def pretraga(
+    tip: str | None = None,
+    marka: str | None = None,
+    tablice: str | None = None,
+    db: Session = Depends(get_db),
+):
+    return crud.search_vozila(db, tip=tip, marka=marka, tablice=tablice)
 
-app = FastAPI()
-
-@app.get("/")
-def root():
-    return {"status": "ok", "docs": "/docs"}
